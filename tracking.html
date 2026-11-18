@@ -1,0 +1,816 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f8f5">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Track your R-BUY order from sourcing to delivery.">
+  <title>Track Your Order | R-BUY</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800;900&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f8f8f5;
+      --white: #ffffff;
+      --ink: #18181b;
+      --blue: #3b82f6;
+      --orange: #f59e0b;
+      --muted: #71717a;
+      --line: #e4e4e7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--blue);
+      color: white;
+    }
+
+    .mono {
+      font-family: 'DM Mono', monospace;
+    }
+
+    .handwritten {
+      font-family: 'Caveat', cursive;
+    }
+
+    .editorial-title {
+      letter-spacing: -.075em;
+      line-height: .95;
+    }
+
+    .blue-text {
+      color: var(--blue);
+    }
+
+    .page-grid {
+      background-image:
+        linear-gradient(rgba(24,24,27,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24,24,27,.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .nav-link {
+      transition: color .2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--blue);
+    }
+
+    .section-card {
+      position: relative;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 12px 35px rgba(24,24,27,.035);
+    }
+
+    .primary-button {
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .primary-button:hover {
+      transform: translateY(-2px);
+      background: #2563eb;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #dbeafe;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .detail-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #a1a1aa;
+      margin-bottom: 7px;
+    }
+
+    .detail-value {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.6;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      position: relative;
+      padding-bottom: 28px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-marker {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+      margin-top: 4px;
+      border: 2px solid #d4d4d8;
+      background: white;
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-item:first-child .timeline-marker {
+      border-color: var(--blue);
+      background: var(--blue);
+      box-shadow: 0 0 0 4px #eff6ff;
+    }
+
+    .timeline-item:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 19px;
+      bottom: 0;
+      width: 2px;
+      background: #e4e4e7;
+    }
+
+    .timeline-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .timeline-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .timeline-description {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .timeline-date {
+      margin-top: 7px;
+      color: #a1a1aa;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+    }
+
+    .action-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all .2s ease;
+      cursor: pointer;
+    }
+
+    .action-primary {
+      background: var(--ink);
+      color: white;
+    }
+
+    .action-primary:hover {
+      background: #3f3f46;
+      transform: translateY(-2px);
+    }
+
+    .action-secondary {
+      background: white;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .action-secondary:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .loading-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 55px 25px;
+      text-align: center;
+    }
+
+    .loader {
+      width: 34px;
+      height: 34px;
+      border: 3px solid #e4e4e7;
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 18px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hidden-force {
+      display: none !important;
+    }
+
+    .copy-notice {
+      font-size: 12px;
+      color: #16834a;
+      margin-top: 12px;
+    }
+
+    @media(max-width: 640px) {
+      .section-card {
+        padding: 21px;
+      }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen">
+
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-50 border-b border-zinc-200 bg-white/90 backdrop-blur-xl">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+
+      <a href="https://benjaminmwangi180-hub.github.io/R-BUY/"
+         class="text-2xl font-black tracking-tight">
+        R<span class="text-blue-500">-</span>BUY<span class="text-blue-500">.</span>
+      </a>
+
+      <div class="hidden items-center gap-7 text-sm text-zinc-500 md:flex">
+        <a href="https://benjaminmwangi180-hub.github.io/R-BUY/" class="nav-link">Home</a>
+        <a href="https://benjaminmwangi180-hub.github.io/R-BUY-ORDER/" class="nav-link">Place an Order</a>
+      </div>
+
+      <span class="mono text-[10px] tracking-widest text-blue-500">
+        ORDERTRACK / 001
+      </span>
+
+    </nav>
+  </header>
+
+
+  <main class="relative">
+
+    <div class="page-grid pointer-events-none absolute inset-x-0 top-0 h-[600px]"></div>
+
+    <!-- INTRO -->
+    <section class="relative mx-auto max-w-5xl px-5 pb-8 pt-16 sm:px-8 sm:pt-20">
+
+      <div class="mb-5 inline-flex items-center gap-2 border border-blue-100 bg-blue-50 px-3 py-2">
+        <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+        <span class="mono text-[9px] tracking-[.17em] text-blue-600">
+          R-BUY / ORDER TRANSPARENCY
+        </span>
+      </div>
+
+      <div class="grid items-end gap-6 md:grid-cols-2">
+
+        <div>
+          <h1 class="editorial-title text-5xl font-black sm:text-6xl md:text-7xl">
+            Your order.<br>
+            <span class="blue-text">Your visibility.</span>
+          </h1>
+        </div>
+
+        <div class="md:pb-2">
+          <p class="max-w-md text-sm leading-7 text-zinc-600">
+            Follow your request as it moves through sourcing,
+            purchasing and delivery. Every important customer-facing
+            update will appear here.
+          </p>
+
+          <p class="handwritten mt-3 text-2xl text-blue-500">
+            Your sourcing journey, made transparent.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- LOADING -->
+    <section id="loading" class="relative mx-auto max-w-5xl px-5 pb-12 sm:px-8">
+      <div class="loading-card">
+        <div class="loader"></div>
+        <h2 class="text-lg font-bold">Retrieving your order...</h2>
+        <p class="mt-2 text-sm text-zinc-500">
+          Connecting securely to R-BUY OrderTrack.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ERROR -->
+    <section id="error" class="hidden-force relative mx-auto max-w-5xl px-5 pb-12 sm:px-8">
+      <div class="section-card text-center">
+        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-500">
+          !
+        </div>
+
+        <h2 id="error-title" class="text-xl font-black">
+          Unable to retrieve your order
+        </h2>
+
+        <p id="error-text" class="mx-auto mt-3 max-w-lg text-sm leading-7 text-zinc-500">
+          The tracking link may be invalid or expired.
+        </p>
+
+        <button onclick="loadOrder()"
+                class="primary-button mt-6 rounded-xl bg-blue-500 px-6 py-3 text-sm font-bold text-white">
+          Try Again
+        </button>
+      </div>
+    </section>
+
+
+    <!-- ORDER CONTENT -->
+    <section id="order-content" class="hidden-force relative mx-auto max-w-5xl px-5 pb-16 sm:px-8">
+
+      <!-- ORDER OVERVIEW -->
+      <div class="section-card mb-5">
+
+        <div class="flex flex-wrap items-center justify-between gap-5 border-b border-zinc-100 pb-6">
+
+          <div>
+            <p class="detail-label">Order Reference</p>
+            <h2 id="order-reference" class="mono text-2xl font-bold text-blue-500">
+              RBUY-00000000
+            </h2>
+          </div>
+
+          <div>
+            <p class="detail-label">Current Status</p>
+            <span class="status-badge">
+              <span class="status-dot"></span>
+              <span id="order-status">Pending Review</span>
+            </span>
+          </div>
+
+        </div>
+
+        <div class="grid grid-cols-2 gap-x-5 gap-y-7 pt-7 md:grid-cols-4">
+
+          <div>
+            <p class="detail-label">Product Requested</p>
+            <p id="product-name" class="detail-value">-</p>
+          </div>
+
+          <div>
+            <p class="detail-label">Quantity</p>
+            <p id="quantity" class="detail-value">-</p>
+          </div>
+
+          <div>
+            <p class="detail-label">Payment Status</p>
+            <p id="payment-status" class="detail-value">-</p>
+          </div>
+
+          <div>
+            <p class="detail-label">Date Submitted</p>
+            <p id="created-date" class="detail-value">-</p>
+          </div>
+
+        </div>
+
+        <div class="mt-8 border-t border-zinc-100 pt-6">
+          <p class="detail-label">Product Description</p>
+          <p id="product-description" class="whitespace-pre-wrap text-sm leading-7 text-zinc-600">
+            -
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- ORDER PROGRESS -->
+      <div class="section-card mb-5">
+
+        <div class="mb-7 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p class="mono text-[10px] tracking-[.16em] text-blue-500">
+              LIVE ORDER UPDATES
+            </p>
+            <h2 class="mt-2 text-2xl font-black tracking-tight">
+              Order Progress
+            </h2>
+          </div>
+
+          <span class="rounded-full bg-zinc-100 px-3 py-2 text-[10px] font-semibold text-zinc-500">
+            CUSTOMER VIEW
+          </span>
+        </div>
+
+        <div id="timeline" class="timeline">
+          <p class="text-sm text-zinc-500">No progress updates yet.</p>
+        </div>
+
+        <div class="mt-7 border-t border-zinc-100 pt-5">
+          <p class="text-xs leading-6 text-zinc-400">
+            This timeline displays updates published by R-BUY.
+            Internal administrative notes are never displayed here.
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- TRACKING LINK -->
+      <div class="section-card">
+
+        <div class="flex items-start gap-4">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-xl">
+            🔗
+          </div>
+
+          <div>
+            <h2 class="text-lg font-black">Keep your tracking link</h2>
+
+            <p class="mt-2 text-sm leading-7 text-zinc-500">
+              Save this private link to return to your order at any time.
+              Anyone with this link can view its customer-facing updates,
+              so avoid sharing it publicly.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+
+          <button onclick="copyTrackingLink()"
+                  class="primary-button action-button bg-blue-500 text-white">
+            Copy Tracking Link
+          </button>
+
+          <button onclick="loadOrder()"
+                  class="action-button border border-zinc-200 bg-white text-zinc-800 hover:border-blue-400">
+            ↻ Refresh Progress
+          </button>
+
+        </div>
+
+        <p id="copy-message" class="copy-notice hidden-force"></p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="border-t border-zinc-200 bg-white">
+    <div class="mx-auto max-w-7xl px-5 py-8 text-center sm:px-8">
+      <p class="text-sm font-black tracking-tight">
+        R<span class="text-blue-500">-</span>BUY<span class="text-blue-500">.</span>
+      </p>
+
+      <p class="mt-2 text-xs text-zinc-500">
+        You can buy anything.
+      </p>
+
+      <p class="mono mt-4 text-[9px] tracking-widest text-zinc-400">
+        ORDERTRACK / SOURCING / PROCUREMENT / DELIVERY
+      </p>
+    </div>
+  </footer>
+
+
+  <script>
+    // ==========================================
+    // SUPABASE CONFIGURATION
+    // ==========================================
+
+    const SUPABASE_URL =
+      "https://ixuohpgqpuvjdbigmhje.supabase.co";
+
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_39FVpTmUPUsSqGAysBbP1A_xqF0nFaA";
+
+    const VIEW_FUNCTION =
+      SUPABASE_URL + "/functions/v1/ordertrack-view";
+
+
+    // ==========================================
+    // TOKEN RECOVERY
+    // ==========================================
+
+    function getTrackingToken() {
+      const params = new URLSearchParams(window.location.search);
+      const urlToken = params.get("token");
+
+      let storedToken = null;
+
+      try {
+        storedToken = sessionStorage.getItem("rbuy_tracking_token");
+      } catch (error) {
+        console.warn("Session storage unavailable.");
+      }
+
+      // URL token always takes priority.
+      const token = urlToken || storedToken;
+
+      if (urlToken) {
+        try {
+          sessionStorage.setItem("rbuy_tracking_token", urlToken);
+        } catch (error) {
+          console.warn("Could not save tracking token.");
+        }
+      }
+
+      return token;
+    }
+
+
+    // ==========================================
+    // HELPERS
+    // ==========================================
+
+    const $ = id => document.getElementById(id);
+
+    function showSection(section) {
+      $("loading").classList.add("hidden-force");
+      $("error").classList.add("hidden-force");
+      $("order-content").classList.add("hidden-force");
+
+      $(section).classList.remove("hidden-force");
+    }
+
+    function setText(id, value) {
+      $(id).textContent =
+        value === null || value === undefined || value === ""
+          ? "Not provided"
+          : String(value);
+    }
+
+    function readableStatus(value) {
+      if (!value) return "Pending";
+
+      return String(value)
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, letter => letter.toUpperCase());
+    }
+
+    function formatDate(value) {
+      if (!value) return "Not available";
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return "Not available";
+      }
+
+      return date.toLocaleString("en-KE", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+
+    // ==========================================
+    // TIMELINE
+    // ==========================================
+
+    function renderTimeline(events) {
+      const timeline = $("timeline");
+      timeline.replaceChildren();
+
+      if (!Array.isArray(events) || events.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "text-sm text-zinc-500";
+        empty.textContent = "No progress updates have been published yet.";
+        timeline.appendChild(empty);
+        return;
+      }
+
+      const sortedEvents = [...events].sort((a, b) => {
+        return new Date(b.created_at || 0) -
+               new Date(a.created_at || 0);
+      });
+
+      sortedEvents.forEach(event => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "timeline-item";
+
+        const marker = document.createElement("div");
+        marker.className = "timeline-marker";
+
+        const content = document.createElement("div");
+        content.className = "timeline-content";
+
+        const title = document.createElement("div");
+        title.className = "timeline-title";
+        title.textContent = event.title || "Order Update";
+
+        const description = document.createElement("div");
+        description.className = "timeline-description";
+        description.textContent =
+          event.description || "Your order has been updated.";
+
+        const date = document.createElement("div");
+        date.className = "timeline-date";
+        date.textContent = formatDate(event.created_at);
+
+        content.appendChild(title);
+        content.appendChild(description);
+        content.appendChild(date);
+
+        wrapper.appendChild(marker);
+        wrapper.appendChild(content);
+
+        timeline.appendChild(wrapper);
+      });
+    }
+
+
+    // ==========================================
+    // DISPLAY ORDER
+    // ==========================================
+
+    function displayOrder(data) {
+      $("order-reference").textContent =
+        data.order_reference || "R-BUY Order";
+
+      setText("product-name", data.product_name);
+      setText("product-description", data.product_description);
+      setText("quantity", data.quantity);
+      setText("payment-status", readableStatus(data.payment_status));
+      setText("order-status", readableStatus(data.status));
+
+      $("created-date").textContent = formatDate(data.created_at);
+
+      renderTimeline(data.events);
+
+      showSection("order-content");
+    }
+
+
+    // ==========================================
+    // FETCH ORDER
+    // ==========================================
+
+    async function loadOrder() {
+      showSection("loading");
+
+      const token = getTrackingToken();
+
+      if (!token || !/^[a-f0-9]{64}$/i.test(token)) {
+        $("error-title").textContent = "Tracking Link Unavailable";
+
+        $("error-text").textContent =
+          "This page does not contain a valid tracking key. " +
+          "Please open your original R-BUY tracking link.";
+
+        showSection("error");
+        return;
+      }
+
+      try {
+        const response = await fetch(VIEW_FUNCTION, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({ token }),
+          cache: "no-store"
+        });
+
+        let result;
+
+        try {
+          result = await response.json();
+        } catch {
+          throw new Error("The tracking server returned an invalid response.");
+        }
+
+        if (!response.ok || result.success === false) {
+          throw new Error(
+            result.error || "Your tracking link could not be verified."
+          );
+        }
+
+        if (!result.order_reference) {
+          throw new Error(
+            "The server response did not contain the expected order details."
+          );
+        }
+
+        displayOrder(result);
+
+      } catch (error) {
+        console.error("R-BUY OrderTrack:", error);
+
+        $("error-title").textContent = "Unable to Load Your Order";
+
+        $("error-text").textContent =
+          error.message || "A connection problem occurred. Please try again.";
+
+        showSection("error");
+      }
+    }
+
+
+    // ==========================================
+    // COPY TRACKING LINK
+    // ==========================================
+
+    async function copyTrackingLink() {
+      const token = getTrackingToken();
+
+      if (!token) return;
+
+      const trackingUrl =
+        window.location.origin +
+        window.location.pathname +
+        "?token=" +
+        encodeURIComponent(token);
+
+      try {
+        await navigator.clipboard.writeText(trackingUrl);
+
+        $("copy-message").textContent =
+          "Tracking link copied successfully. Keep it private.";
+
+        $("copy-message").classList.remove("hidden-force");
+
+      } catch (error) {
+        $("copy-message").textContent =
+          "Copy was blocked. Please copy the address from your browser bar.";
+
+        $("copy-message").classList.remove("hidden-force");
+      }
+    }
+
+
+    // ==========================================
+    // INITIALIZE
+    // ==========================================
+
+    document.addEventListener("DOMContentLoaded", loadOrder);
+  </script>
+
+</body>
+</html>
