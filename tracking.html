@@ -4,113 +4,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f8f8f5">
   <meta name="referrer" content="no-referrer">
-  <meta name="description" content="Track your R-BUY order from sourcing to delivery.">
+  <meta name="theme-color" content="#09090b">
+
   <title>Track Your Order | R-BUY</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800;900&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #f8f8f5;
-      --white: #ffffff;
-      --ink: #18181b;
+      --background: #09090b;
+      --surface: #111111;
+      --surface-hover: #18181b;
+      --border: #242424;
+      --text: #ffffff;
+      --muted: #a1a1aa;
       --blue: #3b82f6;
-      --orange: #f59e0b;
-      --muted: #71717a;
-      --line: #e4e4e7;
+      --blue-hover: #2563eb;
+      --green: #22c55e;
+      --red: #ef4444;
+      --yellow: #eab308;
     }
 
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      line-height: 1.5;
     }
 
-    ::selection {
-      background: var(--blue);
+    button, a {
+      font-family: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+      padding: 25px 20px 50px;
+    }
+
+    /* HEADER */
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 22px;
+      margin-bottom: 35px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
       color: white;
+      text-decoration: none;
     }
 
-    .mono {
-      font-family: 'DM Mono', monospace;
-    }
-
-    .handwritten {
-      font-family: 'Caveat', cursive;
-    }
-
-    .editorial-title {
-      letter-spacing: -.075em;
-      line-height: .95;
-    }
-
-    .blue-text {
+    .brand span {
       color: var(--blue);
     }
 
-    .page-grid {
-      background-image:
-        linear-gradient(rgba(24,24,27,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(24,24,27,.035) 1px, transparent 1px);
-      background-size: 40px 40px;
-      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    .back-home {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color .2s;
     }
 
-    .nav-link {
-      transition: color .2s ease;
-    }
-
-    .nav-link:hover {
+    .back-home:hover {
       color: var(--blue);
     }
 
-    .section-card {
-      position: relative;
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 12px 35px rgba(24,24,27,.035);
+    /* INTRO */
+
+    .intro {
+      margin-bottom: 28px;
     }
 
-    .primary-button {
-      transition: transform .2s ease, background .2s ease;
+    .eyebrow {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 9px;
     }
 
-    .primary-button:hover {
-      transform: translateY(-2px);
-      background: #2563eb;
+    h1 {
+      font-size: clamp(27px, 5vw, 36px);
+      letter-spacing: -1px;
+      margin-bottom: 9px;
     }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* CARDS */
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .card-heading {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* ORDER SUMMARY */
+
+    .reference-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 6px;
+    }
+
+    .reference {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--blue);
+      overflow-wrap: anywhere;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 23px 18px;
+    }
+
+    .detail-value {
+      font-size: 14px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+      line-height: 1.6;
+    }
+
+    .description-value {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    /* STATUS BADGES */
 
     .status-badge {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 7px 11px;
-      border-radius: 999px;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      font-weight: 500;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
       text-transform: uppercase;
-      background: #eff6ff;
-      color: #2563eb;
-      border: 1px solid #dbeafe;
+      background: rgba(59,130,246,.12);
+      color: #60a5fa;
+      border: 1px solid rgba(59,130,246,.25);
     }
 
     .status-dot {
@@ -120,134 +198,164 @@
       background: currentColor;
     }
 
-    .detail-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: #a1a1aa;
-      margin-bottom: 7px;
+    .payment-badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #27272a;
+      color: #d4d4d8;
+      font-size: 12px;
     }
 
-    .detail-value {
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.6;
-      color: var(--ink);
-      overflow-wrap: anywhere;
+    /* TIMELINE */
+
+    .timeline {
+      padding-left: 7px;
     }
 
-    .timeline-item {
+    .event {
       display: flex;
-      gap: 16px;
+      gap: 15px;
       position: relative;
-      padding-bottom: 28px;
+      padding-bottom: 27px;
     }
 
-    .timeline-item:last-child {
+    .event:last-child {
       padding-bottom: 0;
     }
 
-    .timeline-marker {
+    .event-marker {
       width: 14px;
       height: 14px;
       flex: 0 0 14px;
       margin-top: 4px;
-      border: 2px solid #d4d4d8;
-      background: white;
       border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid #52525b;
       position: relative;
       z-index: 1;
     }
 
-    .timeline-item:first-child .timeline-marker {
-      border-color: var(--blue);
+    .event:first-child .event-marker {
       background: var(--blue);
-      box-shadow: 0 0 0 4px #eff6ff;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(59,130,246,.12);
     }
 
-    .timeline-item:not(:last-child)::after {
+    .event:not(:last-child)::after {
       content: "";
       position: absolute;
-      left: 6px;
       top: 19px;
       bottom: 0;
+      left: 6px;
       width: 2px;
-      background: #e4e4e7;
+      background: var(--border);
     }
 
-    .timeline-content {
+    .event-content {
       flex: 1;
       min-width: 0;
     }
 
-    .timeline-title {
+    .event-title {
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 700;
       margin-bottom: 5px;
     }
 
-    .timeline-description {
-      color: var(--muted);
+    .event-description {
       font-size: 13px;
+      color: var(--muted);
       line-height: 1.7;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
     }
 
-    .timeline-date {
+    .event-date {
+      color: #71717a;
+      font-size: 11px;
       margin-top: 7px;
-      color: #a1a1aa;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
     }
 
-    .action-button {
+    /* BUTTONS */
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
-      padding: 13px 18px;
-      border-radius: 10px;
+      padding: 11px 17px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
       font-size: 13px;
       font-weight: 700;
-      transition: all .2s ease;
       cursor: pointer;
+      transition: .2s;
     }
 
-    .action-primary {
-      background: var(--ink);
+    .btn-primary {
+      background: var(--blue);
+      border-color: var(--blue);
       color: white;
     }
 
-    .action-primary:hover {
-      background: #3f3f46;
-      transform: translateY(-2px);
+    .btn-primary:hover {
+      background: var(--blue-hover);
+      border-color: var(--blue-hover);
     }
 
-    .action-secondary {
-      background: white;
-      color: var(--ink);
-      border: 1px solid var(--line);
+    .btn-secondary {
+      background: #18181b;
+      color: white;
     }
 
-    .action-secondary:hover {
+    .btn-secondary:hover {
       border-color: var(--blue);
+      color: #60a5fa;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    /* LOADING AND ERRORS */
+
+    .message {
+      text-align: center;
+      padding: 55px 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .message-icon {
+      font-size: 32px;
+      margin-bottom: 13px;
       color: var(--blue);
     }
 
-    .loading-card {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 55px 25px;
-      text-align: center;
+    .message h2 {
+      font-size: 19px;
+      margin-bottom: 9px;
+    }
+
+    .message p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
     }
 
     .loader {
       width: 34px;
       height: 34px;
-      border: 3px solid #e4e4e7;
+      border: 3px solid #27272a;
       border-top-color: var(--blue);
       border-radius: 50%;
       animation: spin .8s linear infinite;
@@ -258,281 +366,196 @@
       to { transform: rotate(360deg); }
     }
 
-    .hidden-force {
+    .notice {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 14px;
+      line-height: 1.7;
+    }
+
+    .hidden {
       display: none !important;
     }
 
-    .copy-notice {
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 35px;
+      padding-top: 22px;
+      text-align: center;
+      color: #71717a;
       font-size: 12px;
-      color: #16834a;
-      margin-top: 12px;
+      line-height: 1.8;
     }
 
-    @media(max-width: 640px) {
-      .section-card {
-        padding: 21px;
+    footer strong {
+      color: var(--blue);
+    }
+
+    @media(max-width: 520px) {
+      .container {
+        padding: 20px 14px 40px;
       }
-    }
 
-    @media(prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-        scroll-behavior: auto !important;
+      .card {
+        padding: 19px;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 12px;
+      }
+
+      .btn {
+        flex: 1;
+      }
+
+      .reference {
+        font-size: 18px;
       }
     }
   </style>
 </head>
 
-<body class="min-h-screen">
+<body>
+  <main class="container">
 
-  <!-- NAVIGATION -->
-  <header class="sticky top-0 z-50 border-b border-zinc-200 bg-white/90 backdrop-blur-xl">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-
-      <a href="https://benjaminmwangi180-hub.github.io/R-BUY/"
-         class="text-2xl font-black tracking-tight">
-        R<span class="text-blue-500">-</span>BUY<span class="text-blue-500">.</span>
+    <header>
+      <a class="brand"
+         href="https://benjaminmwangi180-hub.github.io/R-BUY/">
+        R-buy<span>.</span>
       </a>
 
-      <div class="hidden items-center gap-7 text-sm text-zinc-500 md:flex">
-        <a href="https://benjaminmwangi180-hub.github.io/R-BUY/" class="nav-link">Home</a>
-        <a href="https://benjaminmwangi180-hub.github.io/R-BUY-ORDER/" class="nav-link">Place an Order</a>
-      </div>
+      <a class="back-home"
+         href="https://benjaminmwangi180-hub.github.io/R-BUY/">
+        ← Back Home
+      </a>
+    </header>
 
-      <span class="mono text-[10px] tracking-widest text-blue-500">
-        ORDERTRACK / 001
-      </span>
-
-    </nav>
-  </header>
-
-
-  <main class="relative">
-
-    <div class="page-grid pointer-events-none absolute inset-x-0 top-0 h-[600px]"></div>
-
-    <!-- INTRO -->
-    <section class="relative mx-auto max-w-5xl px-5 pb-8 pt-16 sm:px-8 sm:pt-20">
-
-      <div class="mb-5 inline-flex items-center gap-2 border border-blue-100 bg-blue-50 px-3 py-2">
-        <span class="h-2 w-2 rounded-full bg-blue-500"></span>
-        <span class="mono text-[9px] tracking-[.17em] text-blue-600">
-          R-BUY / ORDER TRANSPARENCY
-        </span>
-      </div>
-
-      <div class="grid items-end gap-6 md:grid-cols-2">
-
-        <div>
-          <h1 class="editorial-title text-5xl font-black sm:text-6xl md:text-7xl">
-            Your order.<br>
-            <span class="blue-text">Your visibility.</span>
-          </h1>
-        </div>
-
-        <div class="md:pb-2">
-          <p class="max-w-md text-sm leading-7 text-zinc-600">
-            Follow your request as it moves through sourcing,
-            purchasing and delivery. Every important customer-facing
-            update will appear here.
-          </p>
-
-          <p class="handwritten mt-3 text-2xl text-blue-500">
-            Your sourcing journey, made transparent.
-          </p>
-        </div>
-
-      </div>
+    <section class="intro">
+      <div class="eyebrow">R-BUY OrderTrack</div>
+      <h1>Track your order</h1>
+      <p class="subtitle">
+        Stay updated as your order moves through sourcing,
+        purchasing and delivery. Your tracking page is updated
+        as progress is made.
+      </p>
     </section>
 
-
-    <!-- LOADING -->
-    <section id="loading" class="relative mx-auto max-w-5xl px-5 pb-12 sm:px-8">
-      <div class="loading-card">
-        <div class="loader"></div>
-        <h2 class="text-lg font-bold">Retrieving your order...</h2>
-        <p class="mt-2 text-sm text-zinc-500">
-          Connecting securely to R-BUY OrderTrack.
-        </p>
-      </div>
+    <section id="loading" class="message">
+      <div class="loader"></div>
+      <h2>Retrieving your order</h2>
+      <p>Connecting securely to R-BUY...</p>
     </section>
 
+    <section id="error" class="message hidden">
+      <div class="message-icon">!</div>
+      <h2 id="error-title">Unable to retrieve your order</h2>
+      <p id="error-text">
+        The tracking link may be invalid or expired.
+      </p>
 
-    <!-- ERROR -->
-    <section id="error" class="hidden-force relative mx-auto max-w-5xl px-5 pb-12 sm:px-8">
-      <div class="section-card text-center">
-        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-500">
-          !
-        </div>
-
-        <h2 id="error-title" class="text-xl font-black">
-          Unable to retrieve your order
-        </h2>
-
-        <p id="error-text" class="mx-auto mt-3 max-w-lg text-sm leading-7 text-zinc-500">
-          The tracking link may be invalid or expired.
-        </p>
-
-        <button onclick="loadOrder()"
-                class="primary-button mt-6 rounded-xl bg-blue-500 px-6 py-3 text-sm font-bold text-white">
+      <div class="actions" style="justify-content:center">
+        <button class="btn btn-primary" onclick="loadOrder()">
           Try Again
         </button>
       </div>
     </section>
 
+    <section id="order-content" class="hidden">
 
-    <!-- ORDER CONTENT -->
-    <section id="order-content" class="hidden-force relative mx-auto max-w-5xl px-5 pb-16 sm:px-8">
+      <!-- ORDER SUMMARY -->
+      <div class="card">
 
-      <!-- ORDER OVERVIEW -->
-      <div class="section-card mb-5">
+        <div class="reference-row">
+          <div>
+            <div class="label">Order Reference</div>
+            <div class="reference" id="order-reference">RBUY-00000000</div>
+          </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-5 border-b border-zinc-100 pb-6">
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            <span id="order-status">Pending Review</span>
+          </div>
+        </div>
+
+        <div class="details-grid">
 
           <div>
-            <p class="detail-label">Order Reference</p>
-            <h2 id="order-reference" class="mono text-2xl font-bold text-blue-500">
-              RBUY-00000000
-            </h2>
+            <div class="label">Product Requested</div>
+            <div class="detail-value" id="product-name">-</div>
           </div>
 
           <div>
-            <p class="detail-label">Current Status</p>
-            <span class="status-badge">
-              <span class="status-dot"></span>
-              <span id="order-status">Pending Review</span>
-            </span>
+            <div class="label">Quantity</div>
+            <div class="detail-value" id="quantity">-</div>
+          </div>
+
+          <div>
+            <div class="label">Payment Status</div>
+            <div class="detail-value">
+              <span class="payment-badge" id="payment-status">-</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="label">Date Submitted</div>
+            <div class="detail-value" id="created-date">-</div>
           </div>
 
         </div>
 
-        <div class="grid grid-cols-2 gap-x-5 gap-y-7 pt-7 md:grid-cols-4">
-
-          <div>
-            <p class="detail-label">Product Requested</p>
-            <p id="product-name" class="detail-value">-</p>
-          </div>
-
-          <div>
-            <p class="detail-label">Quantity</p>
-            <p id="quantity" class="detail-value">-</p>
-          </div>
-
-          <div>
-            <p class="detail-label">Payment Status</p>
-            <p id="payment-status" class="detail-value">-</p>
-          </div>
-
-          <div>
-            <p class="detail-label">Date Submitted</p>
-            <p id="created-date" class="detail-value">-</p>
-          </div>
-
-        </div>
-
-        <div class="mt-8 border-t border-zinc-100 pt-6">
-          <p class="detail-label">Product Description</p>
-          <p id="product-description" class="whitespace-pre-wrap text-sm leading-7 text-zinc-600">
-            -
-          </p>
+        <div style="margin-top:23px">
+          <div class="label">Product Description</div>
+          <div class="description-value" id="product-description">-</div>
         </div>
 
       </div>
 
-
-      <!-- ORDER PROGRESS -->
-      <div class="section-card mb-5">
-
-        <div class="mb-7 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <p class="mono text-[10px] tracking-[.16em] text-blue-500">
-              LIVE ORDER UPDATES
-            </p>
-            <h2 class="mt-2 text-2xl font-black tracking-tight">
-              Order Progress
-            </h2>
-          </div>
-
-          <span class="rounded-full bg-zinc-100 px-3 py-2 text-[10px] font-semibold text-zinc-500">
-            CUSTOMER VIEW
-          </span>
-        </div>
+      <!-- ORDER TIMELINE -->
+      <div class="card">
+        <div class="card-heading">Order Progress</div>
 
         <div id="timeline" class="timeline">
-          <p class="text-sm text-zinc-500">No progress updates yet.</p>
+          <p class="subtitle">No progress updates yet.</p>
         </div>
 
-        <div class="mt-7 border-t border-zinc-100 pt-5">
-          <p class="text-xs leading-6 text-zinc-400">
-            This timeline displays updates published by R-BUY.
-            Internal administrative notes are never displayed here.
-          </p>
-        </div>
-
+        <p class="notice">
+          Only customer-visible progress updates are displayed.
+          Internal R-BUY administrative notes remain private.
+        </p>
       </div>
 
-
       <!-- TRACKING LINK -->
-      <div class="section-card">
+      <div class="card">
+        <div class="card-heading">Your Tracking Link</div>
 
-        <div class="flex items-start gap-4">
-          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-xl">
-            🔗
-          </div>
+        <p class="subtitle">
+          Save this link to return to your order at any time.
+          Anyone with this private link can view its customer-facing
+          tracking information, so avoid sharing it publicly.
+        </p>
 
-          <div>
-            <h2 class="text-lg font-black">Keep your tracking link</h2>
-
-            <p class="mt-2 text-sm leading-7 text-zinc-500">
-              Save this private link to return to your order at any time.
-              Anyone with this link can view its customer-facing updates,
-              so avoid sharing it publicly.
-            </p>
-          </div>
-        </div>
-
-        <div class="mt-6 flex flex-wrap gap-3">
-
-          <button onclick="copyTrackingLink()"
-                  class="primary-button action-button bg-blue-500 text-white">
+        <div class="actions">
+          <button class="btn btn-primary" onclick="copyTrackingLink()">
             Copy Tracking Link
           </button>
 
-          <button onclick="loadOrder()"
-                  class="action-button border border-zinc-200 bg-white text-zinc-800 hover:border-blue-400">
-            ↻ Refresh Progress
+          <button class="btn btn-secondary" onclick="loadOrder()">
+            Refresh Progress
           </button>
-
         </div>
 
-        <p id="copy-message" class="copy-notice hidden-force"></p>
-
+        <p id="copy-message" class="notice hidden"></p>
       </div>
 
     </section>
 
+    <footer>
+      <strong>R-BUY</strong> | You can buy anything.<br>
+      Your sourcing journey, made transparent.
+    </footer>
+
   </main>
-
-
-  <!-- FOOTER -->
-  <footer class="border-t border-zinc-200 bg-white">
-    <div class="mx-auto max-w-7xl px-5 py-8 text-center sm:px-8">
-      <p class="text-sm font-black tracking-tight">
-        R<span class="text-blue-500">-</span>BUY<span class="text-blue-500">.</span>
-      </p>
-
-      <p class="mt-2 text-xs text-zinc-500">
-        You can buy anything.
-      </p>
-
-      <p class="mono mt-4 text-[9px] tracking-widest text-zinc-400">
-        ORDERTRACK / SOURCING / PROCUREMENT / DELIVERY
-      </p>
-    </div>
-  </footer>
-
 
   <script>
     // ==========================================
@@ -550,7 +573,7 @@
 
 
     // ==========================================
-    // TOKEN RECOVERY
+    // TRACKING TOKEN RECOVERY
     // ==========================================
 
     function getTrackingToken() {
@@ -565,7 +588,6 @@
         console.warn("Session storage unavailable.");
       }
 
-      // URL token always takes priority.
       const token = urlToken || storedToken;
 
       if (urlToken) {
@@ -581,17 +603,17 @@
 
 
     // ==========================================
-    // HELPERS
+    // GENERAL HELPERS
     // ==========================================
 
     const $ = id => document.getElementById(id);
 
     function showSection(section) {
-      $("loading").classList.add("hidden-force");
-      $("error").classList.add("hidden-force");
-      $("order-content").classList.add("hidden-force");
+      $("loading").classList.add("hidden");
+      $("error").classList.add("hidden");
+      $("order-content").classList.add("hidden");
 
-      $(section).classList.remove("hidden-force");
+      $(section).classList.remove("hidden");
     }
 
     function setText(id, value) {
@@ -629,7 +651,7 @@
 
 
     // ==========================================
-    // TIMELINE
+    // TIMELINE RENDERING
     // ==========================================
 
     function renderTimeline(events) {
@@ -638,8 +660,10 @@
 
       if (!Array.isArray(events) || events.length === 0) {
         const empty = document.createElement("p");
-        empty.className = "text-sm text-zinc-500";
-        empty.textContent = "No progress updates have been published yet.";
+        empty.className = "subtitle";
+        empty.textContent =
+          "No progress updates have been published yet.";
+
         timeline.appendChild(empty);
         return;
       }
@@ -651,25 +675,25 @@
 
       sortedEvents.forEach(event => {
         const wrapper = document.createElement("div");
-        wrapper.className = "timeline-item";
+        wrapper.className = "event";
 
         const marker = document.createElement("div");
-        marker.className = "timeline-marker";
+        marker.className = "event-marker";
 
         const content = document.createElement("div");
-        content.className = "timeline-content";
+        content.className = "event-content";
 
         const title = document.createElement("div");
-        title.className = "timeline-title";
+        title.className = "event-title";
         title.textContent = event.title || "Order Update";
 
         const description = document.createElement("div");
-        description.className = "timeline-description";
+        description.className = "event-description";
         description.textContent =
           event.description || "Your order has been updated.";
 
         const date = document.createElement("div");
-        date.className = "timeline-date";
+        date.className = "event-date";
         date.textContent = formatDate(event.created_at);
 
         content.appendChild(title);
@@ -689,88 +713,95 @@
     // ==========================================
 
     function displayOrder(data) {
-      $("order-reference").textContent =
-        data.order_reference || "R-BUY Order";
+  $("order-reference").textContent =
+    data.reference || "R-BUY Order";
 
-      setText("product-name", data.product_name);
-      setText("product-description", data.product_description);
-      setText("quantity", data.quantity);
-      setText("payment-status", readableStatus(data.payment_status));
-      setText("order-status", readableStatus(data.status));
+  setText("product-name", data.product_name);
+  setText("product-description", data.product_description);
+  setText("quantity", data.quantity);
+  setText("payment-status", readableStatus(data.payment_status));
+  setText("order-status", readableStatus(data.status));
 
-      $("created-date").textContent = formatDate(data.created_at);
+  $("created-date").textContent = formatDate(data.created_at);
 
-      renderTimeline(data.events);
+  renderTimeline(data.events);
 
-      showSection("order-content");
-    }
+  showSection("order-content");
+}
 
 
     // ==========================================
     // FETCH ORDER
     // ==========================================
 
-    async function loadOrder() {
-      showSection("loading");
+   async function loadOrder() {
+  showSection("loading");
 
-      const token = getTrackingToken();
+  const token = getTrackingToken();
 
-      if (!token || !/^[a-f0-9]{64}$/i.test(token)) {
-        $("error-title").textContent = "Tracking Link Unavailable";
+  if (!token || !/^[a-f0-9]{64}$/i.test(token)) {
+    $("error-title").textContent = "Tracking Link Unavailable";
 
-        $("error-text").textContent =
-          "This page does not contain a valid tracking key. " +
-          "Please open your original R-BUY tracking link.";
+    $("error-text").textContent =
+      "This page does not contain a valid tracking key. " +
+      "Please open your original R-BUY tracking link.";
 
-        showSection("error");
-        return;
-      }
+    showSection("error");
+    return;
+  }
 
-      try {
-        const response = await fetch(VIEW_FUNCTION, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": "Bearer " + SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({ token }),
-          cache: "no-store"
-        });
+  try {
+    const response = await fetch(VIEW_FUNCTION, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": "Bearer " + SUPABASE_ANON_KEY
+      },
+      body: JSON.stringify({ token }),
+      cache: "no-store"
+    });
 
-        let result;
+    let result;
 
-        try {
-          result = await response.json();
-        } catch {
-          throw new Error("The tracking server returned an invalid response.");
-        }
-
-        if (!response.ok || result.success === false) {
-          throw new Error(
-            result.error || "Your tracking link could not be verified."
-          );
-        }
-
-        if (!result.order_reference) {
-          throw new Error(
-            "The server response did not contain the expected order details."
-          );
-        }
-
-        displayOrder(result);
-
-      } catch (error) {
-        console.error("R-BUY OrderTrack:", error);
-
-        $("error-title").textContent = "Unable to Load Your Order";
-
-        $("error-text").textContent =
-          error.message || "A connection problem occurred. Please try again.";
-
-        showSection("error");
-      }
+    try {
+      result = await response.json();
+    } catch {
+      throw new Error("The tracking server returned an invalid response.");
     }
+
+    if (!response.ok || result.success === false) {
+      throw new Error(
+        result.error || "Your tracking link could not be verified."
+      );
+    }
+
+    // The server returns order details nested inside result.order.
+    if (!result.order || !result.order.reference) {
+      throw new Error(
+        "The server response did not contain the expected order details."
+      );
+    }
+
+    // Normalize the server response to match the display functions.
+    const normalizedOrder = {
+      ...result.order,
+      events: result.events || []
+    };
+
+    displayOrder(normalizedOrder);
+
+  } catch (error) {
+    console.error("R-BUY OrderTrack:", error);
+
+    $("error-title").textContent = "Unable to Load Your Order";
+
+    $("error-text").textContent =
+      error.message || "A connection problem occurred. Please try again.";
+
+    showSection("error");
+  }
+}
 
 
     // ==========================================
@@ -792,15 +823,15 @@
         await navigator.clipboard.writeText(trackingUrl);
 
         $("copy-message").textContent =
-          "Tracking link copied successfully. Keep it private.";
+          "Tracking link copied successfully.";
 
-        $("copy-message").classList.remove("hidden-force");
+        $("copy-message").classList.remove("hidden");
 
       } catch (error) {
         $("copy-message").textContent =
-          "Copy was blocked. Please copy the address from your browser bar.";
+          "Copy was blocked. Please copy the address from your browser.";
 
-        $("copy-message").classList.remove("hidden-force");
+        $("copy-message").classList.remove("hidden");
       }
     }
 
@@ -811,6 +842,5 @@
 
     document.addEventListener("DOMContentLoaded", loadOrder);
   </script>
-
 </body>
 </html>
