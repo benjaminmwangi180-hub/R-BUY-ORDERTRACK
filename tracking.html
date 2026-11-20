@@ -21,6 +21,49 @@
     @media(max-width:760px){.hero-inner{grid-template-columns:1fr;gap:30px}.illustration{max-width:340px}.hero{padding:48px 0 35px}.nav-links{display:none}.hero h1{font-size:clamp(44px,12vw,68px)}.tracking-section{padding-top:20px}.section-head h2{font-size:24px}.section-note{display:none}}
     @media(max-width:520px){.container{padding-left:15px;padding-right:15px}.card{padding:19px}.details-grid{grid-template-columns:1fr 1fr;gap:18px 12px}.btn{flex:1}.reference{font-size:20px}.footer-inner{flex-direction:column;align-items:flex-start}.hero-copy{font-size:13px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+    /* R-BUY VISUAL ORDER JOURNEY */
+    .journey-card{overflow:hidden}
+    .journey-top{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .journey-kicker{font-size:10px;letter-spacing:.14em;color:var(--blue);margin-bottom:5px}
+    .journey-current{font-size:19px;font-weight:900;letter-spacing:-.04em}
+    .journey-percent{font-family:'DM Mono',monospace;font-size:25px;font-weight:500;color:var(--blue);white-space:nowrap}
+    .journey-track{position:relative;padding:8px 0 0}
+    .journey-rail{height:7px;background:#e4e4e7;border-radius:99px;position:absolute;left:4%;right:4%;top:20px;overflow:hidden}
+    .journey-fill{height:100%;width:0;background:linear-gradient(90deg,#60a5fa,#2563eb);border-radius:99px;transition:width .65s ease}
+    .journey-steps{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
+    .journey-step{text-align:center;min-width:0}
+    .journey-icon{width:32px;height:32px;border:2px solid #d4d4d8;background:#fff;color:#a1a1aa;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:14px;position:relative;z-index:1;transition:.25s}
+    .journey-step.done .journey-icon{background:var(--blue);border-color:var(--blue);color:white;box-shadow:0 0 0 4px #eff6ff}
+    .journey-step.current .journey-icon{background:#fff;border:3px solid var(--blue);color:var(--blue);box-shadow:0 0 0 6px #dbeafe;transform:scale(1.08)}
+    .journey-step-name{font-size:10px;font-weight:800;line-height:1.35;color:#a1a1aa;max-width:105px;margin:0 auto}
+    .journey-step.done .journey-step-name,.journey-step.current .journey-step-name{color:#27272a}
+    .journey-step-date{font-size:9px;color:#a1a1aa;margin-top:5px;min-height:14px}
+    .journey-status-note{display:flex;align-items:center;gap:9px;margin-top:25px;padding:13px 15px;border-radius:11px;background:#eff6ff;color:#1d4ed8;font-size:12px;line-height:1.6}
+    .journey-status-note .pulse{width:8px;height:8px;border-radius:50%;background:var(--blue);flex:0 0 8px;box-shadow:0 0 0 4px #dbeafe}
+    .journey-card.is-completed .journey-fill{background:linear-gradient(90deg,#34d399,#059669)}
+    .journey-card.is-completed .journey-percent{color:#059669}
+    .journey-card.is-completed .journey-status-note{background:#ecfdf5;color:#047857}
+    .journey-card.is-completed .journey-status-note .pulse{background:#10b981;box-shadow:0 0 0 4px #d1fae5}
+    .journey-card.is-cancelled .journey-status-note{background:#fff7ed;color:#c2410c}
+    .journey-card.is-cancelled .journey-status-note .pulse{background:#f97316;box-shadow:0 0 0 4px #ffedd5}
+    .last-updated{font-size:10px;color:#a1a1aa;margin-top:12px}
+    @media(max-width:650px){
+      .journey-card{padding:18px 15px}
+      .journey-top{margin-bottom:18px}
+      .journey-current{font-size:16px}
+      .journey-percent{font-size:21px}
+      .journey-track{padding:0}
+      .journey-rail{display:none}
+      .journey-steps{grid-template-columns:1fr;gap:0}
+      .journey-step{display:grid;grid-template-columns:36px 1fr;grid-template-rows:auto auto;column-gap:12px;text-align:left;min-height:59px;position:relative}
+      .journey-step:not(:last-child)::after{content:"";position:absolute;left:15px;top:32px;bottom:0;width:2px;background:#e4e4e7}
+      .journey-step.done:not(:last-child)::after{background:#93c5fd}
+      .journey-icon{grid-column:1;grid-row:1 / span 2;width:32px;height:32px;margin:0}
+      .journey-step-name{grid-column:2;grid-row:1;max-width:none;margin:1px 0 0;font-size:12px}
+      .journey-step-date{grid-column:2;grid-row:2;margin:2px 0 12px;min-height:0}
+      .journey-step.current .journey-icon{transform:none}
+    }
   </style>
 </head>
 <body>
@@ -37,7 +80,20 @@
       <div class="card"><div class="reference-row"><div><div class="label mono">ORDER REFERENCE</div><div class="reference" id="order-reference">RBUY-00000000</div></div><div class="status-badge"><span class="status-dot"></span><span id="order-status">Pending Review</span></div></div>
         <div class="details-grid"><div><div class="label mono">PRODUCT REQUESTED</div><div class="detail-value" id="product-name">-</div></div><div><div class="label mono">QUANTITY</div><div class="detail-value" id="quantity">-</div></div><div><div class="label mono">PAYMENT STATUS</div><div class="detail-value"><span class="payment-badge" id="payment-status">-</span></div></div><div><div class="label mono">DATE SUBMITTED</div><div class="detail-value" id="created-date">-</div></div></div><div style="margin-top:23px"><div class="label mono">PRODUCT DESCRIPTION</div><div class="description-value" id="product-description">-</div></div>
       </div>
-      <div class="card"><div class="card-heading"><span class="section-number">02</span><span>Order progress</span></div><div id="timeline" class="timeline"><p class="subtitle">No progress updates yet.</p></div><p class="notice">Only customer-visible progress updates are displayed. Internal R-BUY administrative notes remain private.</p></div>
+      <!-- Visual order journey is populated from the live order status returned by ordertrack-view. -->
+      <div class="card journey-card" id="journey-card">
+        <div class="journey-top">
+          <div><p class="mono journey-kicker">LIVE ORDER JOURNEY</p><div class="journey-current" id="journey-current">Order received</div></div>
+          <div class="journey-percent" id="journey-percent">0%</div>
+        </div>
+        <div class="journey-track">
+          <div class="journey-rail"><div class="journey-fill" id="journey-fill"></div></div>
+          <div class="journey-steps" id="journey-steps"></div>
+        </div>
+        <div class="journey-status-note"><span class="pulse"></span><span id="journey-message">Your order has been received by R-BUY.</span></div>
+        <p class="last-updated" id="journey-updated">Last updated: waiting for order information</p>
+      </div>
+      <div class="card"><div class="card-heading"><span class="section-number">02</span><span>Order activity</span></div><div id="timeline" class="timeline"><p class="subtitle">No progress updates yet.</p></div><p class="notice">Only customer-visible progress updates are displayed. Internal R-BUY administrative notes remain private.</p></div>
       <div class="soft-panel"><strong>Keep this link private</strong><p class="subtitle" style="color:#1e40af;margin-top:5px">Save this link to return to your order at any time. Anyone with this private link can view its customer-facing tracking information, so avoid sharing it publicly.</p><div class="actions"><button class="btn btn-primary" onclick="copyTrackingLink()">Copy Tracking Link</button><button class="btn btn-secondary" onclick="loadOrder()">Refresh Progress ↻</button></div><p id="copy-message" class="notice hidden"></p></div>
     </section>
   </section>
@@ -137,6 +193,111 @@
 
 
     // ==========================================
+    // VISUAL ORDER JOURNEY
+    // ==========================================
+
+    const ORDER_STAGES = [
+      { title: "Order received", icon: "🛒", description: "Your request has been received by R-BUY." },
+      { title: "Review & sourcing", icon: "🔎", description: "R-BUY is reviewing your request and sourcing suitable options." },
+      { title: "Quotation & payment", icon: "🧾", description: "Your options and quotation are being confirmed, with payment next." },
+      { title: "Order processing", icon: "📦", description: "Your order is being prepared and processed." },
+      { title: "Dispatch & delivery", icon: "🚚", description: "Your order is being dispatched or delivered." },
+      { title: "Order completed", icon: "✓", description: "Your order has been completed. Thank you for choosing R-BUY!" }
+    ];
+
+    function getOrderStage(status) {
+      const value = String(status || "pending_review").toLowerCase().replace(/[\s-]+/g, "_");
+
+      if (["completed", "delivered", "order_completed", "complete"].includes(value)) {
+        return { index: 5, cancelled: false };
+      }
+      if (["cancelled", "canceled", "rejected", "refunded"].includes(value)) {
+        return { index: -1, cancelled: true };
+      }
+      if (["dispatched", "shipped", "out_for_delivery", "ready_for_delivery", "ready_to_collect", "ready_for_pickup"].includes(value)) {
+        return { index: 4, cancelled: false };
+      }
+      if (["processing", "ordered", "purchased", "purchase_confirmed", "being_processed", "order_placed"].includes(value)) {
+        return { index: 3, cancelled: false };
+      }
+      if (["awaiting_payment", "pending_payment", "payment_pending", "awaiting_selection", "selection_ready", "awaiting_customer_selection", "quotation_ready", "quoted", "quote_sent"].includes(value)) {
+        return { index: 2, cancelled: false };
+      }
+      if (["under_review", "reviewing", "sourcing", "investigating", "in_review", "pending_review", "review"].includes(value)) {
+        return { index: value === "pending_review" ? 0 : 1, cancelled: false };
+      }
+
+      // Unknown statuses remain visible in the reference badge and use a safe first-stage fallback.
+      return { index: 0, cancelled: false };
+    }
+
+    function renderOrderJourney(order) {
+      const status = getOrderStage(order.status);
+      const card = $("journey-card");
+      const steps = $("journey-steps");
+      const lastUpdated = order.updated_at || order.created_at;
+      steps.replaceChildren();
+
+      card.classList.toggle("is-completed", status.index === 5);
+      card.classList.toggle("is-cancelled", status.cancelled);
+
+      if (status.cancelled) {
+        $("journey-current").textContent = "Order cancelled";
+        $("journey-percent").textContent = "—";
+        $("journey-fill").style.width = "0%";
+        $("journey-message").textContent = "This order is marked as " + readableStatus(order.status) + ". Please contact R-BUY if you need clarification.";
+        ORDER_STAGES.forEach((stage, index) => {
+          const step = document.createElement("div");
+          step.className = "journey-step";
+          const icon = document.createElement("div");
+          icon.className = "journey-icon";
+          icon.textContent = stage.icon;
+          const name = document.createElement("div");
+          name.className = "journey-step-name";
+          name.textContent = stage.title;
+          const date = document.createElement("div");
+          date.className = "journey-step-date";
+          step.append(icon, name, date);
+          steps.appendChild(step);
+        });
+      } else {
+        const currentIndex = Math.max(0, Math.min(status.index, ORDER_STAGES.length - 1));
+        const percentage = Math.round((currentIndex / (ORDER_STAGES.length - 1)) * 100);
+        $("journey-current").textContent = ORDER_STAGES[currentIndex].title;
+        $("journey-percent").textContent = percentage + "%";
+        $("journey-fill").style.width = percentage + "%";
+        $("journey-message").textContent = ORDER_STAGES[currentIndex].description;
+
+        ORDER_STAGES.forEach((stage, index) => {
+          const step = document.createElement("div");
+          step.className = "journey-step";
+          if (index < currentIndex) step.classList.add("done");
+          if (index === currentIndex) step.classList.add("current");
+
+          const icon = document.createElement("div");
+          icon.className = "journey-icon";
+          icon.textContent = index < currentIndex ? "✓" : stage.icon;
+
+          const name = document.createElement("div");
+          name.className = "journey-step-name";
+          name.textContent = stage.title;
+
+          const date = document.createElement("div");
+          date.className = "journey-step-date";
+          date.textContent = index < currentIndex ? "Completed" : (index === currentIndex ? "Current stage" : "Upcoming");
+
+          step.append(icon, name, date);
+          steps.appendChild(step);
+        });
+      }
+
+      $("journey-updated").textContent =
+        "Last updated: " + formatDate(lastUpdated) +
+        " · Status: " + readableStatus(order.status);
+    }
+
+
+    // ==========================================
     // TIMELINE RENDERING
     // ==========================================
 
@@ -199,95 +360,103 @@
     // ==========================================
 
     function displayOrder(data) {
-  $("order-reference").textContent =
-    data.reference || "R-BUY Order";
+      $("order-reference").textContent =
+        data.reference || "R-BUY Order";
 
-  setText("product-name", data.product_name);
-  setText("product-description", data.product_description);
-  setText("quantity", data.quantity);
-  setText("payment-status", readableStatus(data.payment_status));
-  setText("order-status", readableStatus(data.status));
+      setText("product-name", data.product_name);
+      setText("product-description", data.product_description);
+      setText("quantity", data.quantity);
+      setText("payment-status", readableStatus(data.payment_status));
+      setText("order-status", readableStatus(data.status));
 
-  $("created-date").textContent = formatDate(data.created_at);
+      $("created-date").textContent = formatDate(data.created_at);
 
-  renderTimeline(data.events);
+      renderOrderJourney(data);
+      renderTimeline(data.events);
 
-  showSection("order-content");
-}
+      showSection("order-content");
+    }
 
 
     // ==========================================
     // FETCH ORDER
     // ==========================================
 
-   async function loadOrder() {
-  showSection("loading");
+    let orderFetchInProgress = false;
 
-  const token = getTrackingToken();
+    async function loadOrder(silent = false) {
+      if (orderFetchInProgress) return;
+      orderFetchInProgress = true;
 
-  if (!token || !/^[a-f0-9]{64}$/i.test(token)) {
-    $("error-title").textContent = "Tracking Link Unavailable";
+      if (!silent) showSection("loading");
 
-    $("error-text").textContent =
-      "This page does not contain a valid tracking key. " +
-      "Please open your original R-BUY tracking link.";
+      const token = getTrackingToken();
 
-    showSection("error");
-    return;
-  }
+      if (!token || !/^[a-f0-9]{64}$/i.test(token)) {
+        orderFetchInProgress = false;
+        if (silent) return;
 
-  try {
-    const response = await fetch(VIEW_FUNCTION, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": "Bearer " + SUPABASE_ANON_KEY
-      },
-      body: JSON.stringify({ token }),
-      cache: "no-store"
-    });
+        $("error-title").textContent = "Tracking Link Unavailable";
+        $("error-text").textContent =
+          "This page does not contain a valid tracking key. " +
+          "Please open your original R-BUY tracking link.";
 
-    let result;
+        showSection("error");
+        return;
+      }
 
-    try {
-      result = await response.json();
-    } catch {
-      throw new Error("The tracking server returned an invalid response.");
+      try {
+        const response = await fetch(VIEW_FUNCTION, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({ token }),
+          cache: "no-store"
+        });
+
+        let result;
+
+        try {
+          result = await response.json();
+        } catch {
+          throw new Error("The tracking server returned an invalid response.");
+        }
+
+        if (!response.ok || result.success === false) {
+          throw new Error(
+            result.error || "Your tracking link could not be verified."
+          );
+        }
+
+        if (!result.order || !result.order.reference) {
+          throw new Error(
+            "The server response did not contain the expected order details."
+          );
+        }
+
+        const normalizedOrder = {
+          ...result.order,
+          events: result.events || []
+        };
+
+        displayOrder(normalizedOrder);
+
+      } catch (error) {
+        console.error("R-BUY OrderTrack:", error);
+
+        if (!silent) {
+          $("error-title").textContent = "Unable to Load Your Order";
+          $("error-text").textContent =
+            error.message || "A connection problem occurred. Please try again.";
+          showSection("error");
+        }
+      } finally {
+        orderFetchInProgress = false;
+      }
     }
-
-    if (!response.ok || result.success === false) {
-      throw new Error(
-        result.error || "Your tracking link could not be verified."
-      );
-    }
-
-    // The server returns order details nested inside result.order.
-    if (!result.order || !result.order.reference) {
-      throw new Error(
-        "The server response did not contain the expected order details."
-      );
-    }
-
-    // Normalize the server response to match the display functions.
-    const normalizedOrder = {
-      ...result.order,
-      events: result.events || []
-    };
-
-    displayOrder(normalizedOrder);
-
-  } catch (error) {
-    console.error("R-BUY OrderTrack:", error);
-
-    $("error-title").textContent = "Unable to Load Your Order";
-
-    $("error-text").textContent =
-      error.message || "A connection problem occurred. Please try again.";
-
-    showSection("error");
-  }
-}
 
 
     // ==========================================
@@ -323,9 +492,22 @@
 
 
     // ==========================================
+    // AUTOMATIC STATUS REFRESH
+    // ==========================================
+
+    // Re-check the order every 30 seconds while the tracking page is open.
+    // This lets customers see admin status changes without manually refreshing.
+    setInterval(() => {
+      if (!document.hidden && !$("order-content").classList.contains("hidden")) {
+        loadOrder(true);
+      }
+    }, 30000);
+
+
+    // ==========================================
     // INITIALIZE
     // ==========================================
 
-    document.addEventListener("DOMContentLoaded", loadOrder);
+    document.addEventListener("DOMContentLoaded", () => loadOrder());
   </script></body>
 </html>
